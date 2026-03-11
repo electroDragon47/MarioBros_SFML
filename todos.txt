@@ -1,0 +1,3 @@
+make velocity vector - done
+make a bool , can player move? - done
+check collision for pipe - done

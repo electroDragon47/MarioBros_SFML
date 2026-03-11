@@ -1,0 +1,15 @@
+# Assets
+assets/
+
+# Build output
+build/
+*.exe
+*.o
+*.a
+*.dll
+
+# IDE files
+.vscode/
+.vs/
+*.user
+todos.txt
