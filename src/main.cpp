@@ -5,14 +5,15 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({512, 480}), "Mario Bros.");
+    return game(window);
+}
 
-    // making player
+int game(sf::RenderWindow &window)
+{
     Player mario;
-
-    // clock to get delta time (interval between two frames)
+    Enemy turtle;
     sf::Clock clock;
 
-    // making ground sprites
     initGround();
 
     while (window.isOpen())
@@ -26,16 +27,27 @@ int main()
                 window.close();
         }
         float dt = clock.restart().asSeconds();
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::K))
+            game(window);
 
         window.clear(); // clears the screen before rendering next frame
 
-        // rendering ground and then player
+        // rendering ground and player and enemy
         renderGround(window);
         mario.update(window,dt);
+        turtle.update(window,dt);
         // checkCollision
         mario.checkCollision(pipe_1, dt);
         mario.checkCollision(pipe_2, dt);
-        mario.checkCollision(ground_1, dt);
+        mario.checkCollision(bigpipe_l,dt);
+        mario.checkCollision(bigpipe_2,dt);
+        mario.checkCollision(platform_1,dt);
+        mario.checkCollision(platform_2,dt);
+        mario.checkCollision(platform_3,dt);
+        mario.checkCollision(platform_4,dt);
+        mario.checkCollision(platform_5,dt);
+        mario.checkCollision(platform_6,dt);
+        mario.checkCollision(platform_7,dt);
 
         window.display(); // displaying things that we rendered above
     }

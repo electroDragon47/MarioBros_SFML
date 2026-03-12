@@ -68,20 +68,23 @@ void Player::update(sf::RenderWindow &window, float dt)
         sprite.setPosition({sprite.getPosition().x, 406.f}); // to prevent floor me sinking player
     }
 
+    sprite.setPosition({std::clamp(sprite.getPosition().x, 16.f, 496.f), sprite.getPosition().y});
     window.draw(sprite); // render the SPRITEEEEEEEEEEEEE
 }
 
 void Player::move(float dt)
 {
     acceleration.x = 0.f; // resets every frame
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A))
+    {
         acceleration.x = -800.f;
-        sprite.setScale({1,1});
+        sprite.setScale({1, 1});
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D)){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D))
+    {
         acceleration.x = 800.f;
-        sprite.setScale({-1,1});
+        sprite.setScale({-1, 1});
     }
 }
 
@@ -89,37 +92,38 @@ void Player::checkCollision(sf::RectangleShape object, float dt)
 {
     auto intersection = sprite.getGlobalBounds().findIntersection(object.getGlobalBounds());
 
-    if(!intersection){
+    if (!intersection)
+    {
         return;
     }
 
     float overlapX = (*intersection).size.x;
     float overlapY = (*intersection).size.y;
 
-    if(overlapX < overlapY)
+    if (overlapX < overlapY)
     {
-        if(velocity.x > 0)
-            sprite.move({-overlapX,0});
+        if (velocity.x > 0)
+            sprite.move({-overlapX, 0});
         else
-            sprite.move({overlapX,0});
+            sprite.move({overlapX, 0});
 
         velocity.x = 0.f;
     }
 
-    else 
-    if(velocity.y > 0){
-        sprite.move({0,-overlapY});
-            onGround = true;
-    }        
-        else{sprite.move({0,overlapY});}
-            
+    else if (velocity.y > 0)
+    {
+        sprite.move({0, -overlapY});
+        onGround = true;
+    }
+    else
+    {
+        sprite.move({0, overlapY});
+    }
 
-        velocity.y = 0.f;
-
+    velocity.y = 0.f;
 }
 
 void Player::checkIfOnGround()
 {
     onGround = sprite.getPosition().y >= 406.f;
 }
-
